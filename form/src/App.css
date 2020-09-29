@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  background: #434343;
+}
+
+#root {
+  width: 40%;
+}
+
+#heading {
+  color: white;
+  font-size: 36px;
+}
+
+form {
+  width: 100%;
+}
+
+label {
+  color: white;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+input {
+  height: 35px;
+  margin-bottom: 30px;
+  background: #434343;
+  border: solid 1px white;
+}
+
+.formDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-red {
+  border: solid 1px red;
+}
+
+#submitBtn {
+  align-self: center;
+  width: 40%;
+  padding: 13px;
+  background: #434343;
+  border: solid 1px white;
+  color: white;
+}
+
+
