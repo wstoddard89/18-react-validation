@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import validator from "validator"
 
 /*
+          ERRORS THAT MUST BE SHOWN WHEN INPUTS ARE INVALID
 - Name - Cannot be blank
 - Email - Must be a valid email
 - Username - Cannot be blank
@@ -12,6 +13,7 @@ import validator from "validator"
 
 function Form() {
 
+  // State that is the value of each input
   const [nameText, setName] = useState("")
   const [emailText, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -20,7 +22,7 @@ function Form() {
   const [website, setWebsite] = useState("")
 
 
-  
+  // State that will indicate whether the input is valid or not
   const [nameValid, setNameValid] = useState(true)
   const [emailValid, setEmailValid] = useState(true)
   const [passwordValid, setPasswordValid] = useState(true)
@@ -29,7 +31,7 @@ function Form() {
   const [websiteValid, setWebsiteValid] = useState(true)
 
 
-
+  // State that will be starting label and placeholder for each input if valid
   const [nameLabel, setNameLabel] = useState('Name')
   const [emailLabel, setEmailLabel] = useState('Email')
   const [passwordLabel, setPasswordLabel] = useState('Password')
@@ -37,15 +39,20 @@ function Form() {
   const [userNameLabel, setUserNameLabel] = useState('Username')
   const [websiteLabel, setWebsiteLabel] = useState('Website')
 
+  // State that starts as heading, and will display as "thank you" if all inputs are valid
   const [profile, setProfile] = useState("Profile Form - All fields required");
 
+  // State that starts as true, and when changed to false will hide the form
   const [errors, setErrors] = useState(true)
 
+  // Tracks how many inputs are valid
   let correctInputs = 0
 
+  // Function that will check each input for validity when form is submitted
   function handleSubmit(e) {
     e.preventDefault()
 
+    // If statements that check if input is valid or not
     if (validator.isEmpty(nameText)) {
       setNameLabel("Name - Cannot be blank")
       setNameValid(false)
@@ -102,6 +109,7 @@ function Form() {
       inputsCorrect()
     }
 
+    // Will check if "confirm password" strictly matches "password"
     if (confirmPassword !== password) {
       setConfirmPasswordValid(false)
       setConfirmPasswordLabel('Confirm Password - Must match password')
@@ -120,6 +128,7 @@ function Form() {
        inputsCorrect()
      }
      
+     // Function that hides form and changes heading if all inputs are valid
      function inputsCorrect() {
       if (correctInputs === 6) {
         setErrors(false);
