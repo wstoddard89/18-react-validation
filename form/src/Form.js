@@ -11,82 +11,195 @@ import validator from "validator"
 */
 
 function Form() {
-  const [nameText, setNameValid] = useState("")
-  const [emailText, setEmailText] = useState("")
-  const [passwordText, setPasswordText] = useState("")
+
+  const [nameText, setName] = useState("")
+  const [emailText, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [userName, setUserName] = useState("")
+  const [website, setWebsite] = useState("")
+
+
+  
+  const [nameValid, setNameValid] = useState(true)
   const [emailValid, setEmailValid] = useState(true)
-  const [userName, setUserNameValid] = useState("")
-  const [websiteText, setWebsiteValid] = useState("")
+  const [passwordValid, setPasswordValid] = useState(true)
+  const [confirmPasswordValid, setConfirmPasswordValid] = useState(true)
+  const [userNameValid, setUserNameValid] = useState(true)
+  const [websiteValid, setWebsiteValid] = useState(true)
+
+
+
+  const [nameLabel, setNameLabel] = useState('Name')
+  const [emailLabel, setEmailLabel] = useState('Email')
+  const [passwordLabel, setPasswordLabel] = useState('Password')
+  const [confirmPasswordLabel, setConfirmPasswordLabel] = useState('Confirm Password')
+  const [userNameLabel, setUserNameLabel] = useState('Username')
+  const [websiteLabel, setWebsiteLabel] = useState('Website')
+
+  const [profile, setProfile] = useState("Profile Form - All fields required");
+
+  const [errors, setErrors] = useState(true)
+
+  let correctInputs = 0
 
   function handleSubmit(e) {
     e.preventDefault()
+
+    if (validator.isEmpty(nameText)) {
+      setNameLabel("Name - Cannot be blank")
+      setNameValid(false)
+    } else {
+      setNameValid(true)
+      setNameLabel('Name')
+      setName(nameText)
+      correctInputs += 1
+      inputsCorrect()
+    }
+
     if (!validator.isEmail(emailText)) {
+      setEmailLabel("Email - Please enter email")
       setEmailValid(false)
+      setEmail("")
     } else {
       setEmailValid(true)
+      setEmailLabel('Email')
+      setEmail(emailText)
+      correctInputs += 1
+      inputsCorrect()
     }
+
+    if (validator.isEmpty(userName)) {
+      setUserNameLabel("Username - Cannot be blank")
+      setUserNameValid(false)
+    } else {
+      setUserName(userName)
+      setUserNameValid(true)
+      setUserNameLabel('Username')
+      correctInputs += 1
+      inputsCorrect()
+    }
+
+    if (validator.isEmpty(password)) {
+      setPasswordLabel("Password - Cannot be blank")
+      setPasswordValid(false)
+    } else {
+      setPassword(password)
+      setPasswordValid(true)
+      setPasswordLabel('Password')
+      correctInputs += 1
+      inputsCorrect()
+    }
+
+    if (validator.isEmpty(confirmPassword)) {
+      setConfirmPasswordLabel("Confirm Password - Cannot be blank")
+      setConfirmPasswordValid(false)
+    } else {
+      setConfirmPassword(confirmPassword)
+      setConfirmPasswordValid(true)
+      setConfirmPasswordLabel('Confirm Password')
+      correctInputs += 1
+      inputsCorrect()
+    }
+
+    if (confirmPassword !== password) {
+      setConfirmPasswordValid(false)
+      setConfirmPasswordLabel('Confirm Password - Must match password')
+    
+    }
+
+     if (!validator.isURL(website)) {
+       setWebsite("")
+       setWebsiteLabel("Website - Must be a valid url")
+       setWebsiteValid(false)
+     } else {
+       setWebsite(website)
+       setWebsiteValid(true)
+       setWebsiteLabel('website')
+       correctInputs += 1
+       inputsCorrect()
+     }
+     
+     function inputsCorrect() {
+      if (correctInputs === 6) {
+        setErrors(false);
+        setProfile("Thank you");
+      }
   }
+}
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 id="heading">Profile Form - All fields required</h2>
-      <div className="formDiv">
-        <label>Name</label>
-        <input
-          id="email"
-          type="text"
-          value={nameText}
-          className={"example-input" + (emailValid ? "" : "text-red")}
-          onChange={(e) => setNameValid(e.target.value)}
-        />
+      <h2 id="heading">{profile}</h2>
+      <div className={errors ? "" : "displayNone"}>
+      <div id="formDiv">
 
-        <label htmlFor="email">Email</label>
+        <label htmlFor="name" className={(nameValid ? "" : "textRed")}>{nameLabel}</label>
+        <input
+          id="name"
+          type="text"
+          placeholder={nameLabel}
+          value={nameText}
+          className={(nameValid ? "" : "borderRed")}
+          onChange={(e) => setName(e.target.value)}
+        />
+        
+        <label htmlFor="email" className={(emailValid ? "" : "textRed")}>{emailLabel}</label>
         <input
           id="email"
           type="email"
+          placeholder={emailLabel}
           value={emailText}
-          className={emailValid ? "" : "text-red"}
-          onChange={(e) => setEmailText(e.target.value)}
+          className={emailValid ? "" : "borderRed"}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username" className={(userNameValid ? "" : "textRed")}>{userNameLabel}</label>
         <input
-          id="username"
+          id="text"
           type="username"
+          placeholder={userNameLabel}
           value={userName}
-          className={"example-input" + (emailValid ? "" : "text-red")}
-          onChange={(e) => setUserNameValid(e.target.value)}
+          className={(userNameValid ? "" : "borderRed")}
+          onChange={(e) => setUserName(e.target.value)}
         />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className={(passwordValid ? "" : "textRed")}>{passwordLabel}</label>
         <input
           id="password"
           type="password"
-          value={passwordText}
-          onChange={(e) => setPasswordText(e.target.value)}
+          placeholder={passwordLabel}
+          value={password}
+          className={passwordValid ? "" : "borderRed"}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword" className={(confirmPasswordValid ? "" : "textRed")}>{confirmPasswordLabel}</label>
         <input
           id="confirmPassword"
           type="password"
+          placeholder={confirmPasswordLabel}
           value={confirmPassword}
+          className={confirmPasswordValid ? "" : "borderRed"}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        <label htmlFor="website">Website</label>
+        <label htmlFor="website" className={(websiteValid ? "" : "textRed")}>{websiteLabel}</label>
         <input
           id="website"
           type="website"
-          value={websiteText}
-          onChange={(e) => setWebsiteValid(e.target.value)}
+          placeholder={websiteLabel}
+          value={website}
+          className={websiteValid ? "" : "borderRed"}
+          onChange={(e) => setWebsite(e.target.value)}
         />
         <button id="submitBtn" type="submit">
           Submit
         </button>
       </div>
+      </div>
     </form>
+    
   )
 }
 

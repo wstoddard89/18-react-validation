@@ -12,6 +12,8 @@ body {
 }
 
 #heading {
+  display: flex;
+  justify-content: center;
   color: white;
   font-size: 36px;
 }
@@ -31,15 +33,20 @@ input {
   margin-bottom: 30px;
   background: #434343;
   border: solid 1px white;
+  color: white;
 }
 
-.formDiv {
+#formDiv {
   display: flex;
   flex-direction: column;
 }
 
-.text-red {
+.borderRed {
   border: solid 1px red;
+}
+
+.textRed {
+  color: red;
 }
 
 #submitBtn {
@@ -51,4 +58,6 @@ input {
   color: white;
 }
 
-
+.displayNone {
+  display: none;
+}
