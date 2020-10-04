@@ -34,6 +34,7 @@ input {
   background: #434343;
   border: solid 1px white;
   color: white;
+  outline: none;
 }
 
 #formDiv {
